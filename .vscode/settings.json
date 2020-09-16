@@ -1,4 +1,5 @@
 {
   "editor.fontFamily": "Fira Code Regular,Consolas, 'Courier New', monospace",
-  "explorer.sortOrder": "mixed" // 按照名称排序
+  // "explorer.sortOrder": "mixed" // 按照名称排序
+  "explorer.sortOrder": "default" // 按照名称排序
 }
