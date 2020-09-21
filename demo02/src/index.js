@@ -1,28 +1,41 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './index.css'
-import App from './App'
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 // import * as serviceWorker from './serviceWorker';
 
-const root = document.getElementById('root')
+const root = document.getElementById("root");
 
-/**
- * 1. 元素和组件
- */
-// const app = <App />; // 组件
-// const app1 = <h1>Hello React</h1>; // 元素，元素是组件的最小单位
-// ReactDOM.render(app1, root);
+// const time = new Date().toLocaleString();
+// const str = "当前时间是：";
+// const element = (
+//   <div>
+//     <h1>Hello World!</h1>
+//     <h2>{1 + 1}</h2>
+//     <h2>{str + time}</h2>
+//   </div>
+// );
 
-/**
- * 2. 实现页面中实时时间的展示
- */
-function Clock () {
-  ReactDOM.render(<h1>现在时间：{new Date().toLocaleString()}</h1>, root)
-}
-Clock()
-setInterval(Clock, 1000)
+// const hot = false
+// const element2 = (
+//   <div>
+//     <h1>今天是否隔离？</h1>
+//     <h2>{hot ? "隔离" : "躺着玩"}</h2>
+//   </div>
+// );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-// serviceWorker.unregister();
+// console.log(<h1>111</h1>);
+
+let sick = false;
+const sickVie = <span style={{ backgroundColor: "red" }}>赶紧隔离</span>;
+const healthView = (
+  <span style={{ backgroundColor: "green" }}>麻溜在家呆着</span>
+);
+const element = (
+  <div>
+    <div>{sick ? sickVie : healthView}</div>
+    <button onclick={(sick = !sick)}>点我</button>
+  </div>
+);
+
+ReactDOM.render(element, root);
