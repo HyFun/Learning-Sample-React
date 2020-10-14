@@ -84,3 +84,58 @@ function App() {
 2. 正常的普通HTML元素要小写，如果是大写，默认认为是组件。
 
 **jsx表达式**
+
+
+# React的style和class
+
+## 1. 通过变量的方式设置style
+```jsx
+const exampleStyle = {
+  backgroundColor: 'black',
+  border: '4px solid green',
+  "boder-radus": '50%'
+}
+
+const className = 'text-primary'
+
+ReactDOM.render(
+  <h1 style={exampleStyle} className={className}>哈哈哈哈</h1>
+  ,root)
+```
+注意：
+
+1. 驼峰命名的方式，也可以使用json的方式来设置
+2. 同一个元素，不能设置多个`style`
+
+## 2. class设置
+```jsx
+const className = 'text-primary'
+ReactDOM.render(
+  <h1 className={className}>Hello World！</h1>,
+  root
+)
+```
+注意：
+
+1. 不能使用`class`，因为在jsx看来，`class`是`JavaScript`中的一个声明类的关键字。使用`className`
+2. 同一个元素，不能设置多个`class`
+
+## 3. 设置多个class
+```jsx
+ const classNames = ['text-primary','bg-primary'].join(' ')
+ ReactDOM.render(
+   <h1 className={classNames}>Hello World!</h1>,
+   root
+ )
+```
+
+注意：
+
+1. 多个className可以使用数组的方式，但是数组不会自动拆分，需要我们使用`join()`自行处理
+
+
+# React组件
+函数式组件和类组件的区别和使用：
+函数式比较简单，一般用于静态没有交互事件内容的组件页面；
+类组件，一般又称为动态组件，那么一般会有交互或者数据修改的操作。
+
