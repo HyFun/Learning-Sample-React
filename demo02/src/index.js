@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import $ from 'jquery'
 
-const root = document.querySelector('#root')
+const root = document.querySelector("#root");
 
-// ------------------子组件传给父组件传值-------------------
-// 测试测试
+// ------------------列表渲染-------------------
 
 
+ReactDOM.render(<div>hhh</div>, root);
