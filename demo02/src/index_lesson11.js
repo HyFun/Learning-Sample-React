@@ -71,28 +71,41 @@ class List extends React.Component {
     const tableRow = {
       width: "500px",
       display: "flex",
+      textAlign: 'center'
     };
+    const tableHead = {
+      backgroundColor: '#f0f0f0'
+    }
     const tableCol = {
       flex: "1",
       padding: "10px",
     };
+    const confirmStyle = {
+      color: 'red'
+    }
+    const deadStyle = {
+      color: '#333'
+    }
+    const healStyle = {
+      color: '#09bb07'
+    }
 
     const list = [];
     list.push(
-      <div style={tableRow} key="row">
+      <div style={{...tableRow,...tableHead}} key="row">
         <div style={tableCol}>地区</div>
-        <div style={tableCol}>确诊</div>
-        <div style={tableCol}>死亡</div>
-        <div style={tableCol}>治愈</div>
+        <div style={{...tableCol,...confirmStyle}}>确诊</div>
+        <div style={{...tableCol,...deadStyle}}>死亡</div>
+        <div style={{...tableCol,...healStyle}}>治愈</div>
       </div>
     );
     this.props.areaList.forEach((item) => {
       list.push(
         <div style={tableRow} key={item.id}>
           <div style={tableCol}>{item.name}</div>
-          <div style={tableCol}>{item.today.confirm}</div>
-          <div style={tableCol}>{item.today.dead}</div>
-          <div style={tableCol}>{item.today.heal}</div>
+          <div style={{...tableCol,...confirmStyle}}>{item.today.confirm}</div>
+          <div style={{...tableCol,...deadStyle}}>{item.today.dead}</div>
+          <div style={{...tableCol,...healStyle}}>{item.today.heal}</div>
         </div>
       );
     });

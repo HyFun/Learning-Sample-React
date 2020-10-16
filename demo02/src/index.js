@@ -1,118 +1,116 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 
 const root = document.querySelector("#root");
 
-// ------------------React生命周期-------------------
-/**
- * 生命周期即是组件从实例化到渲染到最终从页面销毁，整个过程就是生命周期，在这生命周期中，我们有许多可以调用得事件，也俗称为钩子函数
- *
- * 生命周期的三个状态
- *  Mounting: 将组件插入DOM中
- *  Updating：将数据更新到DOM中
- *  Unmounting：将组件移除DOM中
- * 参考资料：https://juejin.im/post/6844903510538977287
- */
-class Parent extends Component {
-  constructor() {
-    super();
+// ------------------列表渲染-------------------
+// 获取数据
+let axios = require("axios");
+const http = axios.create({
+  baseURL: "/_api",
+  timeout: 30000,
+});
+
+
+class Parent extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      show: true
+      datas: [],
     };
   }
-
   render() {
-    console.log("父组件", "render");
-    return (
-      <div>
-        <h1>我是父组件</h1>
-        <div>
-            显示子组件：
-            <input type='radio' id='showchild' name='child' value='true' onChange={this.onRadioChange} checked={this.state.show}/>
-            <label htmlFor='showchild'>true</label>
-            <input type='radio' id='hidechild' name='child' value='false' onChange={this.onRadioChange} checked={!this.state.show}/>
-            <label htmlFor='hidechild'>false</label>
-        </div>
-        {this.state.show ? <Child number={this.state.number} /> : ""}
-      </div>
-    );
+    return <List areaList={this.state.datas} />;
   }
-  onRadioChange=(e)=>{
-      const value = e.target.value
-        this.setState({
-            show: value==='true'
-        })
+  componentDidMount() {
+    // 获取数据
+    this.getData()
+      .then((res) => {
+        if (res.status === 200 && res.data.code === 10000) {
+          return Promise.resolve(res.data.data.areaTree);
+        } else {
+          return Promise.reject(new Error(res.data.msg));
+        }
+      })
+      .then((areaTree) => {
+        return Promise.resolve(
+          areaTree.find((item) => {
+            return item.name === "中国";
+          })
+        );
+      })
+      .then((china) => {
+        if (china) {
+          console.log("中国各个地区", china.children);
+          this.setState({
+            datas: china.children.sort((a,b)=>b.today.confirm-a.today.confirm),
+          });
+        }
+      })
+      .catch((error) => {
+        alert(error.message || "获取数据失败");
+      });
   }
 
-  // 组件将要渲染
-  componentWillMount() {
-    console.log("父组件", "componentWillMount");
-  }
-  // 组件渲染完毕
-  componentDidMount() {
-    console.log("父组件", "componentDidMount");
-  }
-  // 组件将要接收props数据
-  componentWillReceiveProps() {
-    console.log("父组件", "componentWillReceiveProps");
-  }
-  // 组件接收到新的state|props 判断是否更新. 返回布尔值
-  shouldComponentUpdate(newProps, newState) {
-    console.log("父组件", "shouldComponentUpdate");
-    return true
-  }
-  // 组件将要更新
-  componentWillUpdate() {
-    console.log("父组件", "componentWillUpdate");
-  }
-  // 组件已经更新
-  componentDidUpdate() {
-    console.log("父组件", "componentDidUpdate");
-  }
-  // 组件将要卸载
-  componentWillUnmount() {
-    console.log("父组件", "componentWillUnmount");
+  /**
+   * 获取实时得数据
+   */
+  async getData() {
+    return http({
+      url: "/ug/api/wuhan/app/data/list-total?t=320551346573",
+      method: "get",
+    });
   }
 }
 
-class Child extends Component {
+class List extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
-    console.log("子组件", "render");
-    return (
-      <div>
-        <h2>我是子组件</h2>
+    const tableRow = {
+      width: "500px",
+      display: "flex",
+      textAlign: 'center'
+    };
+    const tableHead = {
+      backgroundColor: '#f0f0f0'
+    }
+    const tableCol = {
+      flex: "1",
+      padding: "10px",
+    };
+    const confirmStyle = {
+      color: 'red'
+    }
+    const deadStyle = {
+      color: '#333'
+    }
+    const healStyle = {
+      color: '#09bb07'
+    }
+
+    const list = [];
+    list.push(
+      <div style={{...tableRow,...tableHead}} key="row">
+        <div style={tableCol}>地区</div>
+        <div style={{...tableCol,...confirmStyle}}>确诊</div>
+        <div style={{...tableCol,...deadStyle}}>死亡</div>
+        <div style={{...tableCol,...healStyle}}>治愈</div>
       </div>
     );
-  }
+    this.props.areaList.forEach((item) => {
+      list.push(
+        <div style={tableRow} key={item.id}>
+          <div style={tableCol}>{item.name}</div>
+          <div style={{...tableCol,...confirmStyle}}>{item.today.confirm}</div>
+          <div style={{...tableCol,...deadStyle}}>{item.today.dead}</div>
+          <div style={{...tableCol,...healStyle}}>{item.today.heal}</div>
+        </div>
+      );
+    });
 
-  // 组件将要渲染
-  componentWillMount() {
-    console.log("子组件", "componentWillMount");
-  }
-  // 组件渲染完毕
-  componentDidMount() {
-    console.log("子组件", "componentDidMount");
-  }
-  // 组件将要接收props数据
-  componentWillReceiveProps() {
-    console.log("子组件", "componentWillReceiveProps");
-  }
-  // 组件接收到新的state|props 判断是否更新. 返回布尔值
-  shouldComponentUpdate(newProps, newState) {
-    console.log("子组件", "shouldComponentUpdate");
-    return true;
-  }
-  // 组件将要更新
-  componentWillUpdate() {
-    console.log("子组件", "componentWillUpdate");
-  }
-  // 组件已经更新
-  componentDidUpdate() {
-    console.log("子组件", "componentDidUpdate");
-  }
-  // 组件将要卸载
-  componentWillUnmount() {
-    console.log("子组件", "componentWillUnmount");
+    return <div>{list}</div>;
   }
 }
 
