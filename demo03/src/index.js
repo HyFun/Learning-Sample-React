@@ -1,12 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
 
-import { Button } from 'antd-mobile'
+// ----
+import {Provider} from 'react-redux'
+import store from './store'
+import {BrowserRouter as Router,Route} from 'react-router-dom'
+// 组件
+import App from './App'
 
 
 ReactDOM.render(
-  <Button>我是按钮111</Button>,
+  <Provider store={store}>
+    <Router>
+      <Route path='/' exact component={App}></Route>
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
