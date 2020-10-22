@@ -1,0 +1,29 @@
+.anser_item {
+    position: relative;
+    padding: 20px 10px;
+    background-color: #ddd;
+    margin: 10px 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.anser_item.select {
+    color: #fff;
+    background-color: #108ee9;
+}
+
+.anser_item_result {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.anser_item_result.correct {
+    background-color: #09bb07;
+}
+
+.anser_item_result.error {
+    background-color: #e64340;
+}
