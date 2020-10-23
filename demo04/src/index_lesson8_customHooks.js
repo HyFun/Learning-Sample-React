@@ -5,15 +5,11 @@ import {useWindowResize} from './hooks'
 
 // -----------------自定义hooks--------------------
 const Parent = () =>{
-  const [count,setCount] = useState(0)
   const [width,height] = useWindowResize()
-
 
   return (
     <div>
-      <h2>窗口宽高：{width} * {height}</h2>
-      <p>count: {count}</p>
-      <button onClick={()=>{setCount(count+1)}}>点我</button>
+      窗口宽高：{width} * {height}
     </div>
   )
 }
