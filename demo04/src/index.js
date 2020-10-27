@@ -1,21 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import {useWindowResize} from './hooks'
 
-// -----------------自定义hooks--------------------
-const Parent = () =>{
-  const [count,setCount] = useState(0)
-  const [width,height] = useWindowResize()
+// -----------------useSelector、useDispatch--------------------
 
-
+const App = () => {
+  const [name, setName] = useState("");
+  const nameRef = useRef();
+  useEffect(() => {
+    const onBlurListener = (e) => {
+      setName(e.target.value)
+    };
+    nameRef.current.addEventListener("blur",onBlurListener);
+    return () => {
+      nameRef.current.removeEventListener("blur",onBlurListener);
+    };
+  }, []);
   return (
     <div>
-      <h2>窗口宽高：{width} * {height}</h2>
-      <p>count: {count}</p>
-      <button onClick={()=>{setCount(count+1)}}>点我</button>
+      名字：
+      <input ref={nameRef} />
+      <p>名字：{name}</p>
     </div>
-  )
-}
+  );
+};
 
-ReactDOM.render(<Parent />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
