@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import myApp from './helper'
 
 // -----------------useSelector、useDispatch--------------------
 
@@ -18,6 +19,7 @@ const App = () => {
   }, []);
   return (
     <div>
+      <p>{JSON.stringify(myApp)}</p>
       名字：
       <input ref={nameRef} />
       <p>名字：{name}</p>
