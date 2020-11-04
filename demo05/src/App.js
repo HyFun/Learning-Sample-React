@@ -1,15 +1,21 @@
 
+import '@/App.scss'
+
+// react
 import React from 'react'
-import './App.css';
+import {HashRouter as Router,Route,Switch} from 'react-router-dom'
+
+// 路由
+import Login from '@/views/login/index'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    
-  }
   render() {
     return (
-      <div>我是App.js</div>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={Login}/>
+        </Switch>
+      </Router>
     )
   }
 }

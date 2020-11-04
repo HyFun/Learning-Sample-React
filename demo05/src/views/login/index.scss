@@ -1,0 +1,20 @@
+body {
+    background-color: #333333;
+    .form_wrap{
+        width: 300px;
+        height: 100vh;
+        margin: auto;
+        display: flex;
+        align-items: center;
+    }
+
+    .form_header {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        h2 {
+            width: 0;
+            flex: 1;
+        }
+    }
+}

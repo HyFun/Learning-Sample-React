@@ -1,4 +1,4 @@
-'use strict';
+
 
 const fs = require('fs');
 const path = require('path');
@@ -331,6 +331,8 @@ module.exports = function (webpackEnv) {
           'scheduler/tracing': 'scheduler/tracing-profiling',
         }),
         ...(modules.webpackAliases || {}),
+        // 文件路径别名
+        '@': path.resolve(__dirname, './../src'),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -409,6 +411,8 @@ module.exports = function (webpackEnv) {
                       },
                     },
                   ],
+                  // antd按需加载
+                  ['import',{libraryName: 'antd',style: 'css'}],
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
                     require.resolve('react-refresh/babel'),
@@ -499,7 +503,16 @@ module.exports = function (webpackEnv) {
                     : isEnvDevelopment,
                 },
                 'sass-loader'
-              ),
+              )
+              // 配置 sass-resources-loader
+              .concat({
+                loader: 'sass-resources-loader',
+                options: {
+                  resources: [
+                    path.resolve(__dirname,'./../src/styles/global.scss')
+                  ]
+                }
+              }),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
               // Remove this when webpack adds a warning or an error for this.
@@ -541,6 +554,11 @@ module.exports = function (webpackEnv) {
             },
             // ** STOP ** Are you adding a new loader?
             // Make sure to add the new loader(s) before the "file" loader.
+            // 配置sass-loader
+            {
+              test: /\.scss$/,
+              loader: ['style-loader','css-loader','sass-loader']
+            }
           ],
         },
       ],
