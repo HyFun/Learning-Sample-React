@@ -5,16 +5,28 @@ body {
         height: 100vh;
         margin: auto;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .form_header {
+        width: 100%;
         display: flex;
-        flex: 1;
         align-items: center;
+        margin-bottom: 10px;
         h2 {
             width: 0;
             flex: 1;
+            margin: 0;
+        }
+        span {
+            cursor: pointer;
+        }
+    }
+
+    .login-form{
+        .login-form-button{
+            width: 100%;
         }
     }
 }
