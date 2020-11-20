@@ -14,10 +14,12 @@ body {
         display: flex;
         align-items: center;
         margin-bottom: 10px;
+        color: #fff;
         h2 {
             width: 0;
             flex: 1;
             margin: 0;
+            color: #fff;
         }
         span {
             cursor: pointer;

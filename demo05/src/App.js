@@ -1,9 +1,9 @@
 
-import '@/App.scss'
+import '@/styles/normalize.css'
 
 // react
 import React from 'react'
-import {HashRouter as Router,Route,Switch} from 'react-router-dom'
+import {HashRouter as Router,Route,Switch,Redirect} from 'react-router-dom'
 
 // 路由
 import Login from '@/views/login/index'
@@ -11,9 +11,10 @@ import Login from '@/views/login/index'
 class App extends React.Component {
   render() {
     return (
-      <Router>
+      <Router >
         <Switch>
-          <Route path="/" exact component={Login}/>
+          <Route path="/login" exact component={Login}/>
+          <Redirect path="/" to={{pathname: '/login'}} />
         </Switch>
       </Router>
     )
